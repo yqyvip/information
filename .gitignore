@@ -1,0 +1,6 @@
+# Project exclude paths
+/email/target/
+/gateway/target/
+/news-common/target/
+/news-user/target/
+/redis/target/
