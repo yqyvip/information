@@ -1,6 +1,8 @@
 package com.yqy.email.service;
 
 import com.yqy.email.uitls.MailSenderInfo;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Select;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -15,6 +17,7 @@ import java.util.Properties;
  *
  *
  */
+@Slf4j
 public class SimpleMailSender {
     public boolean sendTextMail(MailSenderInfo mailInfo) {
         // 判断是否需要身份认证
@@ -52,7 +55,7 @@ public class SimpleMailSender {
             Transport.send(mailMessage);
             return true;
         } catch (MessagingException ex) {
-            ex.printStackTrace();
+            log.error("邮件发送错误：{}",ex.getMessage());
         }
         return false;
     }

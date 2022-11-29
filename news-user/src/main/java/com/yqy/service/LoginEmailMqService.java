@@ -8,13 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author yqy
- * @date 2022-11-22-15:41
+ * @date 2022-11-29-15:27
  */
-@FeignClient("service-email")
-@Deprecated
-public interface LoginEmailService {
-
-    @PostMapping( "/login/email")
+@FeignClient("rabbitmq-service")
+public interface LoginEmailMqService {
+    @PostMapping("/send/email")
     @ResponseBody
-    Boolean loginEmail(@RequestBody Email email);
+    Boolean sendEmail(@RequestBody Email email);
 }

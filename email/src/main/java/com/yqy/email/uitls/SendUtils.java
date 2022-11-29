@@ -49,7 +49,7 @@ public class SendUtils {
         // 发送文体格式
         sms.sendTextMail(mailInfo);
         // 发送html格式
-        SimpleMailSender.sendHtmlMail(mailInfo);
+//        SimpleMailSender.sendHtmlMail(mailInfo);
 
         log.info("邮件反射完毕");
         return true;

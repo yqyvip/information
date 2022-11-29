@@ -10,6 +10,7 @@
         <module>email</module>
         <module>redis</module>
         <module>gateway</module>
+        <module>rabbitmq</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

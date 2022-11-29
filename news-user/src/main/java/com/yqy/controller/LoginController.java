@@ -3,20 +3,17 @@ package com.yqy.controller;
 import com.yqy.domain.ActionResult;
 import com.yqy.domain.Email;
 import com.yqy.domain.User;
+import com.yqy.service.LoginEmailMqService;
 import com.yqy.service.LoginEmailService;
 import com.yqy.service.LoginVerifyCodeRedisService;
 import com.yqy.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.swing.*;
-import java.util.Objects;
-import java.util.Random;
 
 /**
  * @author yqy
@@ -30,6 +27,9 @@ public class LoginController {
 
     @Autowired
     private LoginEmailService loginEmailService;
+
+    @Autowired
+    private LoginEmailMqService loginEmailMqService;
 
     @Autowired
     private LoginVerifyCodeRedisService loginVerifyCodeRedisService;
@@ -48,10 +48,10 @@ TODO:
         e.setUser(email);
         e.setTitle("验证码:");
         String code = RandomUtils.nextInt(9999) + 1000 + "";
-        log.info("验证码："+code);
+        log.info("验证码：" + code);
         loginVerifyCodeRedisService.setRedisCode(code, email);
         e.setMessage(code);
-        loginEmailService.loginEmail(e);
+        loginEmailMqService.sendEmail(e);
         return ActionResult.defaultFail(222, "验证码已经发送到邮箱");
     }
 
@@ -70,7 +70,7 @@ TODO:
             log.info("注册用户：" + user);
             boolean isSave = userService.save(user);
             if (isSave) {
-                return ActionResult.defaultOk(211,user);
+                return ActionResult.defaultOk(211, user);
             }
         }
 
